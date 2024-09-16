@@ -18,6 +18,7 @@ public class Image {
     private Long id;
     private String name;
     private String url;
+    private String public_id;
 //    private String type;
 //    @Column(name = "relation_id")
 //    private Long relationId;
