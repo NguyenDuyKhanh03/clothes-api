@@ -20,7 +20,13 @@ public class AccountDTO {
         private String phone_number;
     }
 
-//    public static class SignInResponse {
-//
-//    }
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class RegisterRequest {
+        private String email;
+        private String password;
+    }
+
 }

@@ -6,6 +6,10 @@ import com.example.clothes_api.repository.AccountRepository;
 import com.example.clothes_api.repository.RoleRepository;
 import com.example.clothes_api.services.IAuthentication;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +17,9 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService implements IAuthentication {
     private final AccountRepository accountRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JWTService jwtService;
 
     @Override
     public void signUp(AccountDTO.SignUpRequest signUpRequest) {
@@ -23,7 +30,7 @@ public class AuthenticationService implements IAuthentication {
 
         Account user = new Account();
         user.setEmail(signUpRequest.getEmail());
-        user.setPassword(signUpRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
         roleRepository.findByName("ROLE_USER").ifPresent(user::setRole);
         user.setName(signUpRequest.getFull_name());
         user.setNumberPhone(signUpRequest.getPhone_number());
@@ -38,4 +45,15 @@ public class AuthenticationService implements IAuthentication {
         account.setPassword(password);
         accountRepository.save(account);
     }
+
+    public String verify(AccountDTO.RegisterRequest request){
+        Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+        if(authentication.isAuthenticated()){
+            return jwtService.generateToken(request.getEmail());
+        }
+        else {
+            return "Login fail";
+        }
+    }
+
 }
