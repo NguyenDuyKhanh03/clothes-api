@@ -24,6 +24,8 @@ public class Product {
     private String description;
     private Double price;
     private int quantity;
+    private String color;
+    private String size;
 
     @Column(name = "sold_quantity")
     private double soldQuantity;
@@ -32,8 +34,7 @@ public class Product {
     @JoinColumn(name = "product_id")
     private Set<Image> images = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name = "category_id")
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
 
     @CreatedDate

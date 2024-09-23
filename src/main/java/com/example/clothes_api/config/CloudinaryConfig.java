@@ -22,12 +22,12 @@ public class CloudinaryConfig {
 
     @Bean
     public Cloudinary cloudinary() {
-        Map<String, Object> cloudinary = new HashMap<>();
-        cloudinary.put("cloud_name", cloudName);
-        cloudinary.put("api_key", apiKey);
-        cloudinary.put("api_secret", apiSecret);
-        cloudinary.put("secure",true);
-        return new Cloudinary(cloudinary);
+        Map<String, Object> config = new HashMap<>();
+        config.put("cloud_name", cloudName);
+        config.put("api_key", apiKey);
+        config.put("api_secret", apiSecret);
+        config.put("secure",true);
+        return new Cloudinary(config);
 
     }
 }

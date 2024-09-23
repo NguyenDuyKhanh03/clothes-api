@@ -19,8 +19,9 @@ public class ImageService implements IIMageService {
     @Override
     public Map<String, Object> upload(MultipartFile multipartFile) {
         try {
-            return cloudinary.uploader().upload(multipartFile, ObjectUtils.asMap("resource_type","auto"));
+            return cloudinary.uploader().upload(multipartFile.getBytes(),ObjectUtils.asMap("resource_type","auto"));
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
 
