@@ -5,6 +5,8 @@ import com.example.clothes_api.dto.product.ProductResponse;
 import com.example.clothes_api.entity.Product;
 import com.example.clothes_api.services.impl.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,17 +17,17 @@ public class ProductController {
 
 
     @PostMapping("/add")
-    public Product addProduct(ProductRequest product) {
-        return productService.createProduct(product);
+    public ResponseEntity<Product> addProduct(ProductRequest product) {
+        return new ResponseEntity<>(productService.createProduct(product), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/remove")
-    public String removeProduct(@RequestParam Long id) {
-         return productService.removeProduct(id);
+    public ResponseEntity<String> removeProduct(@RequestParam Long id) {
+         return new ResponseEntity<>(productService.removeProduct(id),HttpStatus.GONE);
     }
 
     @GetMapping("/get")
-    public ProductResponse getProduct(@RequestParam Long id) {
-        return productService.getProduct(id);
+    public ResponseEntity<ProductResponse> getProduct(@RequestParam Long id) {
+        return ResponseEntity.ok(productService.getProduct(id));
     }
 }

@@ -3,6 +3,7 @@ package com.example.clothes_api.controller;
 import com.example.clothes_api.dto.AccountDTO;
 import com.example.clothes_api.services.impl.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,8 +18,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody AccountDTO.RegisterRequest request){
-        return authenticationService.verify(request);
+    public ResponseEntity<String> login(@RequestBody AccountDTO.RegisterRequest request){
+        return ResponseEntity.ok(authenticationService.verify(request));
     }
 
     @GetMapping("/khanh")
