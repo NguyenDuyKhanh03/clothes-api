@@ -1,6 +1,7 @@
 package com.example.clothes_api.services.impl;
 
 import com.example.clothes_api.entity.Account;
+import com.example.clothes_api.exception.AccountAlreadyExistsException;
 import com.example.clothes_api.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -27,7 +28,7 @@ public class AccountService {
 
     public void saveAccount(Account user) {
         if(Objects.isNull(user)){
-            throw new RuntimeException("User is null");
+            throw new AccountAlreadyExistsException("User not found");
         }
         accountRepository.save(user);
     }

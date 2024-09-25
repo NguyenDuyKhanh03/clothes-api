@@ -1,7 +1,9 @@
 package com.example.clothes_api.services.impl;
 
 import com.example.clothes_api.dto.AccountDTO;
+import com.example.clothes_api.dto.JwtResponse;
 import com.example.clothes_api.entity.Account;
+import com.example.clothes_api.exception.AccountAlreadyExistsException;
 import com.example.clothes_api.repository.AccountRepository;
 import com.example.clothes_api.repository.RoleRepository;
 import com.example.clothes_api.services.IAuthentication;
@@ -25,7 +27,7 @@ public class AuthenticationService implements IAuthentication {
     public void signUp(AccountDTO.SignUpRequest signUpRequest) {
         accountRepository.findByEmail(signUpRequest.getEmail())
                 .ifPresent(account -> {
-                    throw new RuntimeException();
+                    throw new AccountAlreadyExistsException("Email already exists");
                 });
 
         Account user = new Account();
@@ -40,20 +42,18 @@ public class AuthenticationService implements IAuthentication {
 
     public void resetPassword(String email, String password) {
         Account account= accountRepository.findByEmail(email)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(()-> new AccountAlreadyExistsException("Email not found"));
 
         account.setPassword(password);
         accountRepository.save(account);
     }
 
-    public String verify(AccountDTO.RegisterRequest request){
+    public JwtResponse verify(AccountDTO.RegisterRequest request){
         Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
         if(authentication.isAuthenticated()){
-            return jwtService.generateToken(request.getEmail());
+            return new JwtResponse(jwtService.generateToken(request.getEmail()));
         }
-        else {
-            return "Login fail";
-        }
+        return new JwtResponse("Login failed");
     }
 
 }

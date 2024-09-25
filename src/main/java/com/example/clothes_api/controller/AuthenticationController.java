@@ -1,6 +1,7 @@
 package com.example.clothes_api.controller;
 
 import com.example.clothes_api.dto.AccountDTO;
+import com.example.clothes_api.dto.JwtResponse;
 import com.example.clothes_api.services.impl.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody AccountDTO.RegisterRequest request){
+    public ResponseEntity<JwtResponse> login(@RequestBody AccountDTO.RegisterRequest request){
         return ResponseEntity.ok(authenticationService.verify(request));
     }
 
