@@ -23,6 +23,8 @@ public class CartDetail {
     private Product product;
 
     private int quantity;
+    private String size;
+    private String color;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id")

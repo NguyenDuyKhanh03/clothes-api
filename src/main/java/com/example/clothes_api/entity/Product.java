@@ -1,13 +1,12 @@
 package com.example.clothes_api.entity;
 
+import com.example.clothes_api.enumEntity.Size;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -24,8 +23,6 @@ public class Product {
     private String description;
     private Double price;
     private int quantity;
-    private String color;
-    private String size;
 
     @Column(name = "sold_quantity")
     private double soldQuantity;
@@ -45,5 +42,13 @@ public class Product {
     @Column(name = "update_at")
     private Date updatedAt;
 
+    @ElementCollection(targetClass = Size.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "product_size", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "size")
+    private List<Size> sizes=new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Color> colors=new ArrayList<>();
 
 }

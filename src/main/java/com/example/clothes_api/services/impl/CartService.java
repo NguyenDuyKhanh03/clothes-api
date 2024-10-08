@@ -1,11 +1,13 @@
 package com.example.clothes_api.services.impl;
 
+import com.example.clothes_api.dto.CartDetailsRequest;
 import com.example.clothes_api.entity.Account;
 import com.example.clothes_api.entity.Cart;
 import com.example.clothes_api.entity.CartDetail;
 import com.example.clothes_api.entity.Product;
 import com.example.clothes_api.repository.CartRepository;
 import com.example.clothes_api.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,20 +23,21 @@ public class CartService {
     private final AccountService accountService;
     private final ProductRepository productRepository;
 
-    public Cart addProductToCart(Long productId, int quantity) {
+    @Transactional
+    public Cart addProductToCart(CartDetailsRequest request) {
         Account user= accountService.getAccount()
                 .orElseThrow(()-> new RuntimeException("User not found"));
         Cart cart=user.getCart();
         if(Objects.nonNull(cart) && Objects.nonNull(cart.getCartDetails()) && !cart.getCartDetails().isEmpty()){
             Optional<CartDetail> cartDetail= cart.getCartDetails().stream()
-                    .filter(cd-> cd.getProduct().getId().equals(productId))
+                    .filter(cd-> cd.getProduct().getId().equals(request.getProductId()))
                     .findAny();
 
             if(cartDetail.isPresent()){
-                if(cartDetail.get().getQuantity()< cartDetail.get().getQuantity()+quantity){
+                if(cartDetail.get().getQuantity()< cartDetail.get().getQuantity()+request.getQuantity()){
                     throw new RuntimeException("Quantity not available");
                 }
-                cartDetail.get().setQuantity(cartDetail.get().getQuantity()+quantity);
+                cartDetail.get().setQuantity(cartDetail.get().getQuantity()+request.getQuantity());
                 cart.setTotalPrice(calculateTotalPrice(cart));
                 return cartRepository.save(cart);
             }
@@ -43,12 +46,14 @@ public class CartService {
         if(Objects.isNull(cart)){
             cart= createCart(user);
         }
-        Product product=productRepository.findById(productId)
+        Product product=productRepository.findById(request.getProductId())
                 .orElseThrow(()-> new RuntimeException("Product not found"));
         CartDetail cartDetail= new CartDetail();
         cartDetail.setCart(cart);
         cartDetail.setProduct(product);
-        cartDetail.setQuantity(quantity);
+        cartDetail.setQuantity(request.getQuantity());
+        cartDetail.setSize(request.getSize());
+        cartDetail.setColor(request.getColor());
 
         if(Objects.isNull(cart.getCartDetails())){
             cart.setCartDetails(new ArrayList<>());
@@ -58,6 +63,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
+    @Transactional
     public Cart removeProductFromCart(Long cartDetailId, int quantity) {
         Account user= accountService.getAccount()
                 .orElseThrow(()-> new RuntimeException("User not found"));
@@ -81,6 +87,7 @@ public class CartService {
         return cart;
     }
 
+    @Transactional
     public Cart incrementCartItem(Long cartDetailId, int quantity) {
         Account user= accountService.getAccount()
                 .orElseThrow(()-> new RuntimeException("User not found"));
@@ -109,6 +116,7 @@ public class CartService {
 
         return totalPrice;
     }
+
 
     private Cart createCart(Account user){
         Cart cart= new Cart();

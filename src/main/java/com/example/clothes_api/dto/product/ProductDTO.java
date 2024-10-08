@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -17,9 +18,6 @@ public class ProductDTO {
     private String description;
     private double price;
     private int quantity;
-    private String color;
-    private String size;
-    private Set<Long> categoryIds;
-
+    private List<String> sizes;
 
 }

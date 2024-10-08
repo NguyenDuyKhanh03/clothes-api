@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,4 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductRequest extends ProductDTO {
     private List<MultipartFile> images;
+    private Set<Long> categoryIds;
+    private List<Long> colorIds;
 }
