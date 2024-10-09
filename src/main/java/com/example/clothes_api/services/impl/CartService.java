@@ -132,11 +132,6 @@ public class CartService {
         return cart;
     }
 
-    public void emptyCart() {
-        Account user= accountService.getAccount().get();
-        user.setCart(null);
-        accountService.saveAccount(user);
-    }
 
     public List<CartDetailResponse> getCartDetails() {
         Account user = accountService.getAccount()

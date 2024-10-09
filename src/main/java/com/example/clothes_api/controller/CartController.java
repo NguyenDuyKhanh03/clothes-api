@@ -3,8 +3,6 @@ package com.example.clothes_api.controller;
 import com.example.clothes_api.dto.CartDetailResponse;
 import com.example.clothes_api.dto.CartDetailsRequest;
 import com.example.clothes_api.dto.CartResponse;
-import com.example.clothes_api.entity.Cart;
-import com.example.clothes_api.entity.CartDetail;
 import com.example.clothes_api.services.impl.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

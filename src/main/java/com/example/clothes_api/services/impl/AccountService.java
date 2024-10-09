@@ -32,4 +32,12 @@ public class AccountService {
         }
         accountRepository.save(user);
     }
+
+    public void emptyCart(){
+        Account account= getAccount()
+                .orElseThrow(
+                        ()-> new RuntimeException("User not found"));
+        account.setCart(null);
+        accountRepository.save(account);
+    }
 }

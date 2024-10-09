@@ -22,6 +22,8 @@ public class OrderDetail {
     private Product product;
 
     private int quantity;
+    private String size;
+    private String color;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")

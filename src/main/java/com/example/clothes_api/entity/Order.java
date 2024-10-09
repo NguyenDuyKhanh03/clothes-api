@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,5 +34,13 @@ public class Order {
     private Account user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL,orphanRemoval = true)
-    private Set<OrderDetail> details;
+    private List<OrderDetail> details=new ArrayList<>();
+
+    @Column(name = "status")
+    private String status;
+
+    @PrePersist
+    public void prePersist(){
+        this.status="PENDING";
+    }
 }
