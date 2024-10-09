@@ -24,7 +24,7 @@ public interface ProductMapper {
     Product toProduct(ProductRequest request);
 
     ProductResponse toProductResponse(Product product);
-
+    
 
     default List<String> colorListToStringList(List<Color> colors) {
         if(colors==null)

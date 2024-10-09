@@ -1,10 +1,13 @@
 package com.example.clothes_api.services.impl;
 
+import com.example.clothes_api.dto.CartDetailResponse;
 import com.example.clothes_api.dto.CartDetailsRequest;
+import com.example.clothes_api.dto.CartResponse;
 import com.example.clothes_api.entity.Account;
 import com.example.clothes_api.entity.Cart;
 import com.example.clothes_api.entity.CartDetail;
 import com.example.clothes_api.entity.Product;
+import com.example.clothes_api.mapper.CartMapper;
 import com.example.clothes_api.repository.CartRepository;
 import com.example.clothes_api.repository.ProductRepository;
 import jakarta.transaction.Transactional;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +26,10 @@ public class CartService {
     private final CartRepository cartRepository;
     private final AccountService accountService;
     private final ProductRepository productRepository;
+    private final CartMapper cartMapper;
 
     @Transactional
-    public Cart addProductToCart(CartDetailsRequest request) {
+    public CartResponse addProductToCart(CartDetailsRequest request) {
         Account user= accountService.getAccount()
                 .orElseThrow(()-> new RuntimeException("User not found"));
         Cart cart=user.getCart();
@@ -34,12 +39,13 @@ public class CartService {
                     .findAny();
 
             if(cartDetail.isPresent()){
-                if(cartDetail.get().getQuantity()< cartDetail.get().getQuantity()+request.getQuantity()){
+                if(cartDetail.get().getProduct().getQuantity()< cartDetail.get().getQuantity()+request.getQuantity()){
                     throw new RuntimeException("Quantity not available");
                 }
                 cartDetail.get().setQuantity(cartDetail.get().getQuantity()+request.getQuantity());
                 cart.setTotalPrice(calculateTotalPrice(cart));
-                return cartRepository.save(cart);
+                Cart cart1= cartRepository.save(cart);
+                return cartMapper.toCartResponse(cart1);
             }
         }
 
@@ -60,11 +66,12 @@ public class CartService {
         }
         cart.getCartDetails().add(cartDetail);
         cart.setTotalPrice(calculateTotalPrice(cart));
-        return cartRepository.save(cart);
+        Cart cart1= cartRepository.save(cart);
+        return cartMapper.toCartResponse(cart1);
     }
 
     @Transactional
-    public Cart removeProductFromCart(Long cartDetailId, int quantity) {
+    public CartResponse removeProductFromCart(Long productId, int quantity) {
         Account user= accountService.getAccount()
                 .orElseThrow(()-> new RuntimeException("User not found"));
         Cart cart=user.getCart();
@@ -72,23 +79,23 @@ public class CartService {
             throw new RuntimeException("Cart is empty");
         }
         CartDetail cartDetail= cart.getCartDetails().stream()
-                .filter(cd-> cd.getId().equals(cartDetailId))
+                .filter(cd-> cd.getProduct().getId().equals(productId))
                 .findAny()
                 .orElseThrow(()-> new RuntimeException("Cart detail not found"));
 
-        if(cartDetail.getQuantity()-quantity<0){
+        if(cartDetail.getQuantity()-quantity<=1){
             List<CartDetail> cartDetails= cart.getCartDetails();
             cartDetails.remove(cartDetail);
             cart.setTotalPrice(calculateTotalPrice(cart));
-            return cart;
+            return cartMapper.toCartResponse(cart);
         }
         cartDetail.setQuantity(cartDetail.getQuantity()-quantity);
         cart.setTotalPrice(calculateTotalPrice(cart));
-        return cart;
+        return cartMapper.toCartResponse(cartRepository.save(cart));
     }
 
     @Transactional
-    public Cart incrementCartItem(Long cartDetailId, int quantity) {
+    public CartResponse incrementCartItem(Long productId, int quantity) {
         Account user= accountService.getAccount()
                 .orElseThrow(()-> new RuntimeException("User not found"));
         Cart cart=user.getCart();
@@ -96,7 +103,7 @@ public class CartService {
             throw new RuntimeException("Cart is empty");
         }
         CartDetail cartDetail= cart.getCartDetails().stream()
-                .filter(cd-> cd.getId().equals(cartDetailId))
+                .filter(cd-> cd.getProduct().getId().equals(productId))
                 .findAny()
                 .orElseThrow(()-> new RuntimeException("Cart detail not found"));
 
@@ -105,7 +112,8 @@ public class CartService {
         }
         cartDetail.setQuantity(cartDetail.getQuantity()+quantity);
         cart.setTotalPrice(calculateTotalPrice(cart));
-        return cartRepository.save(cart);
+        Cart cart1= cartRepository.save(cart);
+        return cartMapper.toCartResponse(cart1);
     }
 
     public Double calculateTotalPrice(Cart cart){
@@ -128,5 +136,15 @@ public class CartService {
         Account user= accountService.getAccount().get();
         user.setCart(null);
         accountService.saveAccount(user);
+    }
+
+    public List<CartDetailResponse> getCartDetails() {
+        Account user = accountService.getAccount()
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Cart cart = user.getCart();
+        if (Objects.isNull(cart) || Objects.isNull(cart.getCartDetails()) || cart.getCartDetails().isEmpty()) {
+            throw new RuntimeException("Cart is empty");
+        }
+        return cartMapper.toCartDetailToCartDetailResponse(cart.getCartDetails());
     }
 }

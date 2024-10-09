@@ -33,7 +33,7 @@ public class ProductService {
     private final ColorRepository colorRepository;
 
     @Transactional
-    public Product createProduct(ProductRequest request) {
+    public ProductResponse createProduct(ProductRequest request) {
 
         if(Objects.isNull(request.getImages())){
             throw new FieldRequiredException("Images are required");
@@ -64,7 +64,8 @@ public class ProductService {
             savedProduct.getColors().add(color);
         }
 
-        return productRepository.save(savedProduct);
+        Product product= productRepository.save(savedProduct);
+        return mapper.toProductResponse(product);
     }
 
     @Transactional
