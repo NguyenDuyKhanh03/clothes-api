@@ -18,5 +18,10 @@ public class OrderResponse {
 
     private List<OrderDetailResponse> details;
 
+    private String status;
+
+    @JsonProperty("shipping_fee")
+    private Double shippingFee;
+
 
 }

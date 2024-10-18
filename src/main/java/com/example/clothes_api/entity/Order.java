@@ -39,6 +39,9 @@ public class Order {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "shipping_fee")
+    private Double shippingFee;
+
     @PrePersist
     public void prePersist(){
         this.status="PENDING";

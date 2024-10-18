@@ -13,6 +13,7 @@ import lombok.Setter;
 public class CartDetailsRequest {
     @JsonProperty("product_id")
     private Long productId;
+
     private int quantity;
     private String size;
     private String color;

@@ -13,16 +13,26 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "products")
+@Table(name = "products",indexes = {
+        @Index(name = "product_name_index", columnList = "name"),
+        @Index(name = "product_description_index", columnList = "description")
+})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     private String name;
+
     private String description;
     private Double price;
     private int quantity;
+
+    private double height;
+    private double width;
+    private double weight;
+    private double length;
 
     @Column(name = "sold_quantity")
     private double soldQuantity;
@@ -31,7 +41,7 @@ public class Product {
     @JoinColumn(name = "product_id")
     private Set<Image> images = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
 
     @CreatedDate
