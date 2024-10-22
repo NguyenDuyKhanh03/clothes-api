@@ -35,8 +35,9 @@ public class NotificationService {
         for(Notification notification:getNotifications(email)){
             if(!notification.isSent()){
                 notification.setSent(true);
-                simpMessagingTemplate.convertAndSendToUser(email,"/topic/notification",notification.getMessage());
+                simpMessagingTemplate.convertAndSendToUser(email,"/queue/specific-user",notification.getMessage());
                 notificationRepository.save(notification);
+                System.out.println("Message : "+notification.getMessage());
             }
         }
     }

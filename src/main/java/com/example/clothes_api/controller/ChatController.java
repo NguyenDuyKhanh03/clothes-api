@@ -20,6 +20,7 @@ public class ChatController {
     public ChatMessage addUser(ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         chatMessage.setType(ChatMessage.MessageType.JOIN);
+        System.out.println(chatMessage.getSender() + " joined the chat");
         return chatMessage;
     }
 }

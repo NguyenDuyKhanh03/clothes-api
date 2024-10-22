@@ -29,9 +29,13 @@ public class Product {
     private Double price;
     private int quantity;
 
+    @Column(nullable = true)
     private double height;
+    @Column(nullable = true)
     private double width;
+    @Column(nullable = true)
     private double weight;
+    @Column(nullable = true)
     private double length;
 
     @Column(name = "sold_quantity")

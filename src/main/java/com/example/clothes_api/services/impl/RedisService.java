@@ -10,7 +10,8 @@ public class RedisService {
     private final RedisTemplate<String, Object> redisTemplate;
 
     public void saveUserConnection(String email) {
-        redisTemplate.opsForValue().set(email,false);
+        System.out.println("Save user successfully ");
+        redisTemplate.opsForValue().set(email,"true");
     }
 
     public void deleteUserConnection(String email) {
@@ -18,6 +19,7 @@ public class RedisService {
     }
 
     public boolean isUserConnected(String email) {
+        System.out.println(redisTemplate.hasKey(email));
         return redisTemplate.hasKey(email);
     }
 }
