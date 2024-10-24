@@ -31,7 +31,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         // /topic là nơi mà server gửi tin nhắn tới client (publish)
-        registry.enableSimpleBroker("/topic");
+        registry.enableSimpleBroker("/topic","/queue/specific-user");
 
         // /app là nơi mà client gửi tin nhắn tới server (subscribe)
         registry.setApplicationDestinationPrefixes("/app");

@@ -29,4 +29,12 @@ public class AccountDTO {
         private String password;
     }
 
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ForgotPasswordRequest {
+        private String email;
+        private String otp;
+    }
 }

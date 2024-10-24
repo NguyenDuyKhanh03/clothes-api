@@ -29,7 +29,7 @@ public class NotificationController {
     public void sendNotification(@Payload NotificationRequest request) throws Exception {
         //neu user on thi gui con khong thi luu vao db
         if(redisService.isUserConnected(request.getEmail())) {
-            simpMessagingTemplate.convertAndSendToUser(request.getEmail(), "/topic", request.getMessage());
+            simpMessagingTemplate.convertAndSendToUser(request.getEmail(), "/queue/specific-user", request.getMessage());
             notificationService.sendNotificationToUser(request.getEmail());
             System.out.println("Message : "+request.getMessage());
         }

@@ -23,6 +23,10 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.verify(request));
     }
 
+    @PostMapping("/forgot-password")
+    public void forgotPassword(@RequestBody AccountDTO.RegisterRequest request){
+        authenticationService.resetPassword(request.getEmail(), request.getPassword());
+    }
     @GetMapping("/khanh")
     public String khanh() {
         return "Khanh";
