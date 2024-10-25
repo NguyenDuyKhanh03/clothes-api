@@ -93,4 +93,12 @@ public class ProductService {
                 .map(mapper::toProductResponse)
                 .toList();
     }
+
+    public List<ProductResponse> searchProductByTitle(String title) {
+        String search = "%" + title + "%";
+        List<Product> products = productRepository.searchProductByTitle(search);
+        return products.stream()
+                .map(mapper::toProductResponse)
+                .toList();
+    }
 }

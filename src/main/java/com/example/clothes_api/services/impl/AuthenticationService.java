@@ -4,6 +4,7 @@ import com.example.clothes_api.dto.AccountDTO;
 import com.example.clothes_api.dto.JwtResponse;
 import com.example.clothes_api.entity.Account;
 import com.example.clothes_api.exception.AccountAlreadyExistsException;
+import com.example.clothes_api.exception.ResourceNotFoundException;
 import com.example.clothes_api.repository.AccountRepository;
 import com.example.clothes_api.repository.RoleRepository;
 import com.example.clothes_api.services.IAuthentication;
@@ -40,13 +41,7 @@ public class AuthenticationService implements IAuthentication {
         accountRepository.save(user);
     }
 
-    public void resetPassword(String email, String password) {
-        Account account= accountRepository.findByEmail(email)
-                .orElseThrow(()-> new AccountAlreadyExistsException("Email not found"));
 
-        account.setPassword(password);
-        accountRepository.save(account);
-    }
 
     public JwtResponse verify(AccountDTO.RegisterRequest request){
         Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
@@ -54,6 +49,14 @@ public class AuthenticationService implements IAuthentication {
             return new JwtResponse(jwtService.generateToken(request.getEmail()));
         }
         return new JwtResponse("Login failed");
+    }
+
+    public void resetPassword(String email, String password) {
+        Account account= accountRepository.findByEmail(email)
+                .orElseThrow(()-> new ResourceNotFoundException("User not found"));
+
+        account.setPassword(passwordEncoder.encode(password));
+        accountRepository.save(account);
     }
 
 }

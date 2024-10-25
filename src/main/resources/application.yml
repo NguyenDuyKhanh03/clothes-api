@@ -23,6 +23,19 @@ spring:
                 client-id: ${GOOGLE_CLIENT_ID:}
                 client-secret: ${GOOGLE_CLIENT_SECRET:}
                 redirect-uri: "{baseUrl}/api/auth/khanh"
+  mail:
+    username: ${GMAIL_USERNAME:}
+    password: ${GMAIL_PASSWORD:}
+    host: smtp.gmail.com
+    port: 587
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    default-encoding: utf-8
 
 
 
@@ -34,6 +47,10 @@ cloudinary:
 
 
 secret_key: ${SECRET_KEY:}
+
+token_shop: ${TOKEN_SHOP_GHN:}
+shop_id: ${SHOP_ID:}
+
 
 
 

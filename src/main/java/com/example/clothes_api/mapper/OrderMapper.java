@@ -14,6 +14,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
 
+    @Mapping(target = "shippingFee", source = "shippingFee")
     @Mapping(target = "details", source = "details")
     OrderResponse toOrderResponse(Order order);
 

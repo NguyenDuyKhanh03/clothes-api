@@ -27,7 +27,7 @@ public interface CartMapper {
         List<CartDetailResponse> cartDetailResponses = new ArrayList<>();
         for (CartDetail cartDetail : cartDetails) {
             CartDetailResponse cartDetailResponse = new CartDetailResponse();
-            cartDetailResponse.setId(cartDetail.getId());
+            cartDetailResponse.setProductId(cartDetail.getProduct().getId());
             cartDetailResponse.setColor(cartDetail.getColor());
             cartDetailResponse.setQuantity(cartDetail.getQuantity());
             cartDetailResponse.setSize(cartDetail.getSize());
