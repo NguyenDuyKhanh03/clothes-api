@@ -1,8 +1,10 @@
 package com.example.clothes_api;
 
 import com.example.clothes_api.entity.Category;
+import com.example.clothes_api.entity.Color;
 import com.example.clothes_api.entity.Role;
 import com.example.clothes_api.repository.CategoryRepository;
+import com.example.clothes_api.repository.ColorRepository;
 import com.example.clothes_api.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements CommandLineRunner {
     private final RoleRepository roleRepository;
     private final CategoryRepository categoryRepository;
+    private final ColorRepository colorRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -30,6 +33,18 @@ public class DataInitializer implements CommandLineRunner {
             Category category1 = new Category();
             category1.setName("Áo sơ mi nam");
             categoryRepository.save(category1);
+        }
+
+        if(colorRepository.count()==0){
+            Color color1 = new Color();
+            color1.setName("Đen");
+            colorRepository.save(color1);
+
+            Color color2 = new Color();
+            color2.setName("Trắng");
+
+            colorRepository.save(color2);
+
         }
     }
 }

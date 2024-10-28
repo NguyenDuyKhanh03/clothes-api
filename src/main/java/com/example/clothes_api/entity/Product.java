@@ -65,4 +65,6 @@ public class Product {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Color> colors=new ArrayList<>();
 
+    @Version
+    private int version;
 }

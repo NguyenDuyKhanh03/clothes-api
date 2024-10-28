@@ -19,6 +19,6 @@ public class OrderController {
 
     @PostMapping("/create")
     public ResponseEntity<OrderResponse> createOrder() {;
-        return new ResponseEntity<>(orderService.createOrderWithGHN().block(), HttpStatus.CREATED);
+        return new ResponseEntity<>(orderService.createOrder(), HttpStatus.CREATED);
     }
 }
