@@ -37,8 +37,15 @@ Here are some ideas to get you started:
   <ul>
     <li style="color: #00ff00;">Đăng kí</li>
     <li style="color: #00ff00;">Đăng nhập</li>
+    <li style="color: #00ff00;">Reset password</li>
   </ul>
-
+    
+  <li style="color: #ff6347;font-size:16px;">Email service</li>
+  <ul>
+    <li style="color: #00ff00;">Gửi OTP tới email của user</li>
+    <li style="color: #00ff00;">Xác thực OTP</li>
+  </ul>
+    
   <li style="color: #ff6347;font-size:16px;;">Cart service</li>
   <ul>
     <li style="color: #00ff00;">Thêm sản phẩm vào giỏ hàng</li>
@@ -46,11 +53,17 @@ Here are some ideas to get you started:
     <li style="color: #00ff00;">Cập nhật số lượng sản phẩm trong giỏ</li>
     <li style="color: #00ff00;">Lấy chi tiết sản phẩm trong giỏ</li>
   </ul>
+  <li style="color: #ff6347;font-size:16px;;">Order service ( tối ưu hóa quy trình đặt hàng nếu như 1 sản phẩm chỉ có số lượng là 2 nhưng nhiều user mỗi user 1 thì chỉ có 2 user thực hiện thành công)</li>
+  <ul>
+    <li style="color: #00ff00;">Đặt hàng</li>
+    <li style="color: #00ff00;">Đặt hàng với GHN</li>
+  </ul>
 
   <li style="color: #ff6347;font-size:16px;">Chat service</li>
   <ul>
     <li style="color: #00ff00;">Gửi tin nhắn</li>
     <li style="color: #00ff00;">Thêm user</li>
+    <li style="color: #00ff00;">Gửi thông báo và nhận thông báo cho user được chỉ định</li>
   </ul>
 
   <li style="color: #ff6347;font-size:16px;">Product service</li>
@@ -59,6 +72,7 @@ Here are some ideas to get you started:
     <li style="color: #00ff00;">Xóa sản phẩm</li>
     <li style="color: #00ff00;">Lấy thông tin của 1 sản phẩm</li>
     <li style="color: #00ff00;">Lấy thông tin tất cả sản phẩm</li>
+    <li style="color: #00ff00;">Tìm kiếm sản phẩm</li>
   </ul>
 </ul>
 
