@@ -8,6 +8,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
     @Bean
     public WebClient webClient(WebClient.Builder builder) {
-        return builder.baseUrl("https://online-gateway.ghn.vn/shiip/public-api/v2").build();
+        return builder.baseUrl("https://online-gateway.ghn.vn/shiip/public-api").build();
     }
 }

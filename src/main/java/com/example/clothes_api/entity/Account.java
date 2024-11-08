@@ -42,12 +42,8 @@ public class Account{
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private Cart cart;
 
-    @ManyToMany
-    @JoinTable(
-            name = "account_address",
-            joinColumns = @JoinColumn(name = "account_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id")
-    )
-    private List<Address> addresses;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "address_id")
+    private Address addresses;
 
 }

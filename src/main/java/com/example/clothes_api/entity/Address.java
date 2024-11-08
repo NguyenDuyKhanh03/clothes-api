@@ -19,12 +19,11 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "province_id")
-    private Ward ward;
 
     private String street;
 
-    @ManyToMany(mappedBy = "addresses")
-    private List<Account> accounts;
+
+    private String province;
+    private String district;
+    private String ward;
 }

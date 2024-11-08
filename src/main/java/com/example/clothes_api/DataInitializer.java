@@ -1,8 +1,7 @@
 package com.example.clothes_api;
 
-import com.example.clothes_api.entity.Category;
-import com.example.clothes_api.entity.Color;
-import com.example.clothes_api.entity.Role;
+import com.example.clothes_api.entity.*;
+import com.example.clothes_api.repository.AccountRepository;
 import com.example.clothes_api.repository.CategoryRepository;
 import com.example.clothes_api.repository.ColorRepository;
 import com.example.clothes_api.repository.RoleRepository;
@@ -16,6 +15,7 @@ public class DataInitializer implements CommandLineRunner {
     private final RoleRepository roleRepository;
     private final CategoryRepository categoryRepository;
     private final ColorRepository colorRepository;
+    private final AccountRepository accountRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -43,8 +43,22 @@ public class DataInitializer implements CommandLineRunner {
             Color color2 = new Color();
             color2.setName("Trắng");
 
+            Color color3 = new Color();
+            color2.setName("Red");
+
             colorRepository.save(color2);
 
         }
+//        Address address = new Address();
+//        address.setProvince("Hà Nội");
+//        address.setDistrict("Cầu Giấy");
+//        address.setWard("Dịch Vọng");
+//        address.setStreet("Số 1, Đại Cồ Việt");
+//        Account account = accountRepository.findByEmail("duy@gmail.com").get();
+//        account.setAddresses(address);
+//        accountRepository.save(account);
+
+
+
     }
 }
