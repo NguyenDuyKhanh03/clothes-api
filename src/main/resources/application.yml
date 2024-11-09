@@ -11,7 +11,7 @@ spring:
       mode: always
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -44,6 +44,13 @@ secret_key: ${SECRET_KEY:}
 
 token_shop: ${TOKEN_SHOP_GHN:}
 shop_id: ${SHOP_ID:}
+
+zalo:
+    app-id: ${ZALO_APP_ID:}
+    key-1: ${ZALO_KEY1:}
+    key-2: ${ZALO_KEY2:}
+    create-order-endpoint: https://sb-openapi.zalopay.vn/v2/create
+
 
 
 

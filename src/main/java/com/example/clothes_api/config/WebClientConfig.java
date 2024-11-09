@@ -7,7 +7,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
     @Bean
-    public WebClient webClient(WebClient.Builder builder) {
+    public WebClient webClientGHN(WebClient.Builder builder) {
         return builder.baseUrl("https://online-gateway.ghn.vn/shiip/public-api").build();
+    }
+
+    @Bean
+    public WebClient webClientZalopay(WebClient.Builder builder) {
+        return builder.baseUrl("https://sandbox.zalopay.com.vn/v001/tpe").build();
     }
 }

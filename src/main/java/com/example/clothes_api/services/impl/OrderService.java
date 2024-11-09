@@ -30,7 +30,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final AccountService accountService;
     private final OrderMapper orderMapper;
-    private final WebClient webClient;
+    private final WebClient webClientGHN;
     private final ProductRepository productRepository;
 
     @Value("${token_shop}")
@@ -176,7 +176,7 @@ public class OrderService {
                                 } catch (Exception e) {
                                     throw new RuntimeException("Error while converting to json");
                                 }
-                                return webClient.post()
+                                return webClientGHN.post()
                                         .uri("/v2/shipping-order/create")
                                         .header("token", token)
                                         .header("ShopId", shopId)
@@ -220,7 +220,7 @@ public class OrderService {
     }
 
     private Mono<Integer> getProvinces(String provinceName){
-        return webClient.get()
+        return webClientGHN.get()
                 .uri("/master-data/province")
                 .header("token", token)
                 .retrieve()
@@ -251,7 +251,7 @@ public class OrderService {
     }
 
     private Mono<Integer> getDistricts(String districtName,int provinceId){
-        return webClient.get()
+        return webClientGHN.get()
                 .uri("/master-data/district?province_id="+provinceId)
                 .header("token", token)
                 .retrieve()
@@ -281,7 +281,7 @@ public class OrderService {
     }
 
     private Mono<Integer> getWard(String wardName, int districtId){
-        return webClient.get()
+        return webClientGHN.get()
                 .uri("/master-data/ward?district_id="+districtId)
                 .header("token", token)
                 .retrieve()
