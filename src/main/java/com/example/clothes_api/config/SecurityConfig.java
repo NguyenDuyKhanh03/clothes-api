@@ -33,7 +33,14 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/auth/**","/secured/room/**","/api/v1/mail/**").permitAll()
+                        .requestMatchers(
+                                "/api/v1/auth/**",
+                                "/secured/room/**",
+                                "/api/v1/mail/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

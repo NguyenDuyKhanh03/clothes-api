@@ -4,6 +4,8 @@ import com.example.clothes_api.dto.AccountDTO;
 import com.example.clothes_api.dto.MailRequest;
 import com.example.clothes_api.dto.MailResponse;
 import com.example.clothes_api.services.impl.EmailService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/mail")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
+@Tag(name = "Send Mail")
 public class MailController {
     private final EmailService emailService;
 

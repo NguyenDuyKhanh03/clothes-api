@@ -4,21 +4,22 @@ import com.example.clothes_api.dto.NotificationRequest;
 import com.example.clothes_api.services.impl.JWTService;
 import com.example.clothes_api.services.impl.NotificationService;
 import com.example.clothes_api.services.impl.RedisService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1/push-notification")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
+@Tag(name = "Notification")
 public class NotificationController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final NotificationService notificationService;

@@ -4,6 +4,8 @@ import com.example.clothes_api.dto.CartDetailResponse;
 import com.example.clothes_api.dto.CartDetailsRequest;
 import com.example.clothes_api.dto.CartResponse;
 import com.example.clothes_api.services.impl.CartService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
+@Tag(name = "Cart")
 public class CartController {
     private final CartService cartService;
 
